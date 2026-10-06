@@ -15,8 +15,8 @@ AGENTES_POR_SUPERVISORA = {
             "Maria Eduarda-LT", "Luana Bueno-LT", "Paula Oliveira-LT", "Ana Rocha-Juridico",
             "Juliana Pereira-LT", "Raquel Vieira-LT", "Jhonny Souza-LT", "Ariane Wackerhage-LT",
             "Heloisa Candido-LT", "Eliane Luz-LT", "Amanda Santos-LT", "Jessica Alves-LT",
-            "Haline Goncalves-LT", "Lilian Souza-LT",
-            "Kauana Neri-LT"
+            "Haline Goncalves-LT", "Lilian Souza-LT", "Kauana Neri-LT",
+            "Geovana Sousa-LT"
         ]
     },
     "luciene": {
@@ -24,7 +24,7 @@ AGENTES_POR_SUPERVISORA = {
         "agentes": [
             "Yago Sampaio-LG", "Nicoly Maciel-LG", "Cleitiane Pereira-LG", "Nycole Batista-LG",
             "Gabriela Santos-LG", "Maria Nortok-LG", "Rebeca Melo-LG", "Leticia Bremen-LG",
-            "Maria Leite-LT", "Fabiola Soares-LT"
+            "Maria Leite-LT", "Fabiola Soares-LT", "Laryssa de Souza-LG"
         ]
     }
 }
@@ -64,7 +64,6 @@ def publicar_evento():
     if not dados or not all(k in dados for k in ('nome', 'motivo', 'tempo_segundos')):
         return jsonify({"error": "Dados invalidos"}), 400
 
-    # Aceita os campos novos, com fallback pra eventos antigos
     hora_pausa = dados.get('hora_pausa', '—')
     hora_despausa = dados.get('hora_despausa', datetime.now().strftime('%d/%m/%Y - %H:%M:%S'))
 
