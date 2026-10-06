@@ -14,11 +14,11 @@
         .user-info { margin-left: auto; text-align: right; }
         .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
         .evento { background: #ffffff; border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(30,58,110,0.06); border-left: 4px solid #e87a2f; }
-        .topo { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
-        .nome { font-weight: 700; }
-        .quando { font-size: 0.8rem; color: #8a97ab; }
-        .detalhe { font-size: 0.9rem; color: #4a5b73; }
-        .tag-tempo { display: inline-block; background-color: #fff1e6; color: #e87a2f; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; margin-left: 0.5rem; }
+        .topo { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 8px; }
+        .nome { font-weight: 700; font-size: 1rem; }
+        .detalhe { font-size: 0.9rem; color: #4a5b73; margin-top: 4px; }
+        .detalhe strong { color: #1e3a6e; }
+        .tag-tempo { display: inline-block; background-color: #fff1e6; color: #e87a2f; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; }
         .vazio { text-align: center; padding: 4rem 1rem; background: #fff; border-radius: 12px; color: #8a97ab; }
         .vazio span { font-size: 3rem; display: block; margin-bottom: 1rem; }
     </style>
@@ -39,12 +39,17 @@
             {% for e in eventos %}
                 <div class="evento">
                     <div class="topo">
-                        <span class="nome">{{ e.nome }}</span>
-                        <span class="quando">{{ e.timestamp }}</span>
+                        <span class="nome">👤 {{ e.nome }}</span>
+                        <span class="tag-tempo">⏱️ {{ (e.tempo_segundos // 60) }} min {{ (e.tempo_segundos % 60) }}s</span>
                     </div>
                     <div class="detalhe">
-                        Motivo: <strong>{{ e.motivo }}</strong>
-                        <span class="tag-tempo">{{ (e.tempo_segundos // 60) }} min {{ (e.tempo_segundos % 60) }}s</span>
+                        📋 Motivo: <strong>{{ e.motivo }}</strong>
+                    </div>
+                    <div class="detalhe" style="font-size: 13px;">
+                        ⏸️ Pausou em: <strong>{{ e.hora_pausa }}</strong>
+                    </div>
+                    <div class="detalhe" style="font-size: 13px;">
+                        ▶️ Despausado em: <strong>{{ e.hora_despausa }}</strong>
                     </div>
                 </div>
             {% endfor %}
