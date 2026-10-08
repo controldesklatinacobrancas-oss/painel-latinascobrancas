@@ -6,26 +6,40 @@ from flask import Flask, render_template, request, jsonify, abort, redirect, url
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-# --- Mapeamento de Agentes para Supervisoras ---
+# --- Listas de Agentes ---
+TATIANE_AGENTES = [
+    "Ana Carla-LT", "Bruna Jadna-LT", "Maria Lizete-LT", "Kaoane Domingos-LT",
+    "Maria Eduarda-LT", "Luana Bueno-LT", "Paula Oliveira-LT", "Ana Rocha-Juridico",
+    "Juliana Pereira-LT", "Raquel Vieira-LT", "Jhonny Souza-LT", "Ariane Wackerhage-LT",
+    "Heloisa Candido-LT", "Eliane Luz-LT", "Amanda Santos-LT", "Jessica Alves-LT",
+    "Haline Goncalves-LT", "Lilian Souza-LT", "Kauana Neri-LT", "Geovana Sousa-LT"
+]
+
+LUCIENE_AGENTES = [
+    "Yago Sampaio-LG", "Nicoly Maciel-LG", "Cleitiane Pereira-LG", "Nycole Batista-LG",
+    "Gabriela Santos-LG", "Maria Nortok-LG", "Rebeca Melo-LG", "Leticia Bremen-LG",
+    "Laryssa de Souza-LG",
+    # Transferidas (nomes atualizados)
+    "Maria Leite-LG",
+    "Fabiola Soares-LG"
+]
+
+# --- Acessos e Perfis ---
 AGENTES_POR_SUPERVISORA = {
     "tatiane": {
         "nome": "Tatiane Lima",
-        "agentes": [
-            "Ana Carla-LT", "Bruna Jadna-LT", "Maria Lizete-LT", "Kaoane Domingos-LT",
-            "Maria Eduarda-LT", "Luana Bueno-LT", "Paula Oliveira-LT", "Ana Rocha-Juridico",
-            "Juliana Pereira-LT", "Raquel Vieira-LT", "Jhonny Souza-LT", "Ariane Wackerhage-LT",
-            "Heloisa Candido-LT", "Eliane Luz-LT", "Amanda Santos-LT", "Jessica Alves-LT",
-            "Haline Goncalves-LT", "Lilian Souza-LT", "Kauana Neri-LT",
-            "Geovana Sousa-LT"
-        ]
+        # Tatiane ve TODOS os agentes (dela + da Luciene)
+        "agentes": TATIANE_AGENTES + LUCIENE_AGENTES
     },
     "luciene": {
         "nome": "Luciene",
-        "agentes": [
-            "Yago Sampaio-LG", "Nicoly Maciel-LG", "Cleitiane Pereira-LG", "Nycole Batista-LG",
-            "Gabriela Santos-LG", "Maria Nortok-LG", "Rebeca Melo-LG", "Leticia Bremen-LG",
-            "Maria Leite-LT", "Fabiola Soares-LT", "Laryssa de Souza-LG"
-        ]
+        # Luciene ve SO os agentes dela
+        "agentes": LUCIENE_AGENTES
+    },
+    "fabiane": {
+        "nome": "Fabiane",
+        # Fabiane ve SO os agentes da Tatiane
+        "agentes": TATIANE_AGENTES
     }
 }
 
@@ -61,14 +75,12 @@ def painel_supervisora(supervisora_chave):
 
 @app.route('/limpar/<supervisora_chave>', methods=['POST'])
 def limpar_historico(supervisora_chave):
-    """Remove os eventos dos agentes dessa supervisora."""
     global eventos_em_memoria
 
     supervisora = AGENTES_POR_SUPERVISORA.get(supervisora_chave)
     if not supervisora:
         abort(404, description="Supervisora nao encontrada.")
 
-    # Mantem apenas eventos que NAO sao dessa supervisora
     eventos_em_memoria = [
         e for e in eventos_em_memoria if e['nome'] not in supervisora['agentes']
     ]
