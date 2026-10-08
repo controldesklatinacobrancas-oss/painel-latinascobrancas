@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from flask import Flask, render_template, request, jsonify, abort
+from flask import Flask, render_template, request, jsonify, abort, redirect, url_for
 
 # --- Configuracoes ---
 app = Flask(__name__)
@@ -55,8 +55,27 @@ def painel_supervisora(supervisora_chave):
     return render_template(
         'painel.html',
         nome_supervisora=supervisora['nome'],
+        supervisora_chave=supervisora_chave,
         eventos=eventos_filtrados
     )
+
+@app.route('/limpar/<supervisora_chave>', methods=['POST'])
+def limpar_historico(supervisora_chave):
+    """Remove os eventos dos agentes dessa supervisora."""
+    global eventos_em_memoria
+
+    supervisora = AGENTES_POR_SUPERVISORA.get(supervisora_chave)
+    if not supervisora:
+        abort(404, description="Supervisora nao encontrada.")
+
+    # Mantem apenas eventos que NAO sao dessa supervisora
+    eventos_em_memoria = [
+        e for e in eventos_em_memoria if e['nome'] not in supervisora['agentes']
+    ]
+
+    print(f"Historico limpo para {supervisora['nome']}. Restam {len(eventos_em_memoria)} eventos.")
+
+    return redirect(url_for('painel_supervisora', supervisora_chave=supervisora_chave))
 
 @app.route('/publicar', methods=['POST'])
 def publicar_evento():
