@@ -13,6 +13,38 @@
         .slogan { font-size: 0.6rem; font-weight: 600; letter-spacing: 3px; color: #8a97ab; text-transform: uppercase; margin-top: 3px; }
         .user-info { margin-left: auto; text-align: right; }
         .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+
+        .barra-acoes {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .contador {
+            font-size: 0.9rem;
+            color: #5a6b85;
+            font-weight: 600;
+        }
+        .contador strong { color: #1e3a6e; }
+
+        .btn-limpar {
+            background: #ffffff;
+            color: #e87a2f;
+            border: 2px solid #e87a2f;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .btn-limpar:hover {
+            background: #e87a2f;
+            color: #ffffff;
+        }
+
         .evento { background: #ffffff; border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(30,58,110,0.06); border-left: 4px solid #e87a2f; }
         .topo { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 8px; }
         .nome { font-weight: 700; font-size: 1rem; }
@@ -35,6 +67,20 @@
         </div>
     </header>
     <div class="container">
+
+        <div class="barra-acoes">
+            <div class="contador">
+                Total: <strong>{{ eventos|length }}</strong> despausa(s)
+            </div>
+            {% if eventos %}
+                <form method="POST" action="/limpar/{{ supervisora_chave }}" style="margin: 0;" onsubmit="return confirm('Tem certeza que quer limpar todo o historico?');">
+                    <button type="submit" class="btn-limpar">
+                        🗑️ Limpar Historico
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+
         {% if eventos %}
             {% for e in eventos %}
                 <div class="evento">
