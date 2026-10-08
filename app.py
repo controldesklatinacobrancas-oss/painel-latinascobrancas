@@ -9,7 +9,7 @@ app.secret_key = os.urandom(24)
 # --- Listas de Agentes ---
 TATIANE_AGENTES = [
     "Ana Carla-LT", "Bruna Jadna-LT", "Maria Lizete-LT", "Kaoane Domingos-LT",
-    "Maria Eduarda-LT", "Luana Bueno-LT", "Paula Oliveira-LT", "Ana Rocha-Juridico",
+    "Maria Eduarda-LT", "Luana Bueno-LT", "Paula Oliveira-LT", "Ana Rocha-Jurídico",
     "Juliana Pereira-LT", "Raquel Vieira-LT", "Jhonny Souza-LT", "Ariane Wackerhage-LT",
     "Heloisa Candido-LT", "Eliane Luz-LT", "Amanda Santos-LT", "Jessica Alves-LT",
     "Haline Goncalves-LT", "Lilian Souza-LT", "Kauana Neri-LT", "Geovana Sousa-LT"
@@ -19,7 +19,7 @@ LUCIENE_AGENTES = [
     "Yago Sampaio-LG", "Nicoly Maciel-LG", "Cleitiane Pereira-LG", "Nycole Batista-LG",
     "Gabriela Santos-LG", "Maria Nortok-LG", "Rebeca Melo-LG", "Leticia Bremen-LG",
     "Laryssa de Souza-LG",
-    # Transferidas (nomes atualizados)
+    # Transferidas (nomes corrigidos conforme Vonix)
     "Maria Leite-LG",
     "Fabiola Soares-LG"
 ]
